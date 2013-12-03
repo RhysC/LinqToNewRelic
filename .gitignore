@@ -108,4 +108,4 @@ Backup*/
 UpgradeLog*.XML
 
 #Test app config - these should be secret keys. if they do leak you will need to reset your keys in the new relic dash board ((account name) > Account settings > Integrations > Data sharing > API access)
-src/LinqToNewRelic.Tests/app.config
+src/LinqToNewRelic.Tests/[Aa]pp.config
