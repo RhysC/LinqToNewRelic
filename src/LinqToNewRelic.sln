@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToNewRelic", "LinqToNewRelic.csproj", "{D6A0A995-B932-4D2B-B901-6360E243DD37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToNewRelic", "LinqToNewRelic\LinqToNewRelic.csproj", "{D6A0A995-B932-4D2B-B901-6360E243DD37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToNewRelic.Tests", "..\LinqToNewRelic.Tests\LinqToNewRelic.Tests.csproj", "{4EC13505-F699-42BC-989F-4F35CCEF4854}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToNewRelic.Tests", "LinqToNewRelic.Tests\LinqToNewRelic.Tests.csproj", "{4EC13505-F699-42BC-989F-4F35CCEF4854}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{210ECDF4-9F05-450E-9AC2-8584544977A0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
