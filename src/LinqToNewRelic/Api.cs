@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace LinqToNewRelic
 {
+    //NOTE : Only supporting query operation at the moment. Newrelic does expose non query methods too - see the docs
     public class Api
     {
         private readonly string _apiKey;
@@ -18,23 +19,48 @@ namespace LinqToNewRelic
 
         public Application[] GetApplications(string accountId)
         {
-            return GetDeserializedResult<Application[]>(GetNewRelicUrl(accountId, "/applications.json"));
+            return GetDeserializedResult<Application[]>(GetNewRelicUrl(accountId, "applications.json"));
         }
 
         public Server[] GetApplicationServers(string accountId, int applicationId)
         {
-            var serverPath = string.Format("/applications/{0}/servers.json", applicationId);
+            var serverPath = string.Format("applications/{0}/servers.json", applicationId);
             return GetDeserializedResult<Server[]>(GetNewRelicUrl(accountId, serverPath));
         }
-
+        public ServerSettings[] GetServerSettings(string accountId)
+        {
+            return GetDeserializedResult<ServerSettings[]>(GetNewRelicUrl(accountId, "server_settings.json"));
+        }
+        public ServerSettings GetServerSettings(string accountId, int serverId)
+        {
+            var settingsPath = string.Format("server_settings/{0}.json", serverId);
+            return GetDeserializedResult<ServerSettings>(GetNewRelicUrl(accountId, settingsPath));
+        }
         public ApplicationSetting[] GetApplicationSettings(string accountId)
         {
-            return GetDeserializedResult<ApplicationSetting[]>(GetNewRelicUrl(accountId, "/application_settings.json"));
+            return GetDeserializedResult<ApplicationSetting[]>(GetNewRelicUrl(accountId, "application_settings.json"));
+        }
+
+        public ApplicationSetting GetApplicationSettings(string accountId, int applicationId)
+        {
+            var settingsPath = string.Format("application_settings/{0}.json", applicationId);
+            return GetDeserializedResult<ApplicationSetting>(GetNewRelicUrl(accountId, settingsPath));
+        }
+        public ApplicationThreshold[] GetApplicationAlertThresholds(string accountId, int applicationId)
+        {
+            var settingsPath = string.Format("applications/{0}/thresholds.json", applicationId);
+            return GetDeserializedResult<ApplicationThreshold[]>(GetNewRelicUrl(accountId, settingsPath));
+        }
+
+        public ServerThreshold[] GetServerAlertThresholds(string accountId, int serverId)
+        {
+            var settingsPath = string.Format("servers/{0}/thresholds.json", serverId);
+            return GetDeserializedResult<ServerThreshold[]>(GetNewRelicUrl(accountId, settingsPath));
         }
 
         public ApplicationMetricsDefinition[] ApplicationMetricDefinitions(string accountId, int applicationId)
         {
-            var metricPath = string.Format("/agents/{0}/metrics.json", applicationId);
+            var metricPath = string.Format("agents/{0}/metrics.json", applicationId);
             return GetDeserializedResult<ApplicationMetricsDefinition[]>(GetNewRelicUrl(accountId, metricPath));
         }
 
@@ -87,7 +113,5 @@ namespace LinqToNewRelic
             //1 or 0, defaults to 0. This determines whether you get back a single value aggregated over the entire time period, or a time series. Summary results do not include the begin and end times in the result. Time s
             return parameters;
         }
-
-
     }
 }

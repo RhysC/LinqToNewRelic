@@ -18,7 +18,7 @@ namespace LinqToNewRelic.Tests
                 string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["NewRelicAccountId"]) ||
                 string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["NewRelicApplicationId"]))
             {
-                throw new InvalidOperationException("You need to assign the app setting in the test appcofig of the test project with your details. See https://docs.newrelic.com/docs/features/getting-started-with-the-new-relic-rest-api");
+                throw new InvalidOperationException("You need to assign the app setting in the test appconfig of the test project with your details. See https://docs.newrelic.com/docs/features/getting-started-with-the-new-relic-rest-api");
             }
 
             _apiKey = ConfigurationManager.AppSettings["NewRelicApiKey"];
@@ -57,7 +57,48 @@ namespace LinqToNewRelic.Tests
             }
         }
         [Fact]
-        public void CanGetApplicationSettings()
+        public void CanGetAllApplicationServerSettings()
+        {
+            var api = new Api(_apiKey);
+            var settingsList = api.GetServerSettings(_accountId);
+            Assert.NotEmpty(settingsList);
+            foreach (var settings in settingsList)
+            {
+                Assert.NotEqual(0, settings.ServerId);
+                Assert.NotNull(settings.DisplayName);
+                Assert.NotNull(settings.HostName);
+                Assert.NotNull(settings.Url);
+            }
+        }
+        [Fact]
+        public void CanGetApplicationServerSettings()
+        {
+            var api = new Api(_apiKey);
+            var serverId = api.GetServerSettings(_accountId).First().ServerId;
+            var settings = api.GetServerSettings(_accountId, serverId);
+            Assert.NotEqual(0, settings.ServerId);
+            Assert.NotNull(settings.DisplayName);
+            Assert.NotNull(settings.HostName);
+        } 
+        [Fact]
+        public void CanGetApplicationServerThresholds()
+        {
+            var api = new Api(_apiKey);
+            var serverId = api.GetServerSettings(_accountId).First().ServerId;
+            var thresholds = api.GetServerAlertThresholds(_accountId, serverId);
+
+            foreach (var threshold in thresholds)
+            {
+                Assert.NotEqual(0, threshold.Id);
+                Assert.NotNull(threshold.Type);
+                Assert.NotNull(threshold.Url);
+                Assert.NotEqual(0, threshold.CautionValue);
+                Assert.NotEqual(0, threshold.CriticalValue);
+            }
+
+        }
+        [Fact]
+        public void CanGetAllApplicationsSettings()
         {
             var api = new Api(_apiKey);
             var settings = api.GetApplicationSettings(_accountId);
@@ -67,7 +108,34 @@ namespace LinqToNewRelic.Tests
                 Assert.NotEqual(0, setting.ApplicationId);
                 Assert.NotNull(setting.Name);
                 Assert.NotNull(setting.Url);
-                Assert.NotEqual(0,setting.RumApdexT);
+                Assert.True(setting.AppApdexT > -0.1);
+                Assert.NotEqual(0, setting.RumApdexT);
+            }
+        }
+        [Fact]
+        public void CanGetAnApplicationsSettings()
+        {
+            var api = new Api(_apiKey);
+            var setting = api.GetApplicationSettings(_accountId, _applicationId);
+            Assert.NotEqual(0, setting.ApplicationId);
+            Assert.NotNull(setting.Name);
+            Assert.True(setting.AppApdexT > -0.1);
+            Assert.NotEqual(0, setting.RumApdexT);
+            Assert.Null(setting.Url);//Not returned in the query
+        }
+
+        [Fact]
+        public void CanGetAnApplicationsAlertThresholds()
+        {
+            var api = new Api(_apiKey);
+            var thresholds = api.GetApplicationAlertThresholds(_accountId, _applicationId);
+            foreach (var threshold in thresholds)
+            {
+                Assert.NotEqual(0, threshold.Id);
+                Assert.NotNull(threshold.Type);
+                Assert.NotNull(threshold.Url);
+                Assert.NotEqual(0, threshold.CautionValue);
+                Assert.NotEqual(0, threshold.CriticalValue);
             }
         }
 
