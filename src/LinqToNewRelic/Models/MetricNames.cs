@@ -1,5 +1,6 @@
 ﻿namespace LinqToNewRelic.Models
 {
+    //https://api.newrelic.com/api/v1/agents/:agent_id/metrics.:format
     public class MetricNames
     {
         public const string AverageCallTime = "average_call_time";

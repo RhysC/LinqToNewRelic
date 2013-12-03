@@ -49,7 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationFixture.cs" />
+    <Compile Include="ConfigSetUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerFixture.cs" />
+    <Compile Include="UserFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LinqToNewRelic\LinqToNewRelic.csproj">

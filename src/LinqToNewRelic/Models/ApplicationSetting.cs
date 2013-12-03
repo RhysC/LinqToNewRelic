@@ -9,7 +9,7 @@ namespace LinqToNewRelic.Models
         public string Name { get; set; }
         [JsonProperty("alerts_enabled")]
         public bool AlertsEnabled { get; set; }
-        [JsonProperty("app-apdex-t")]
+        [JsonProperty("app_apdex_t")]
         public float AppApdexT { get; set; }
         [JsonProperty("rum_apdex_t")]
         public float RumApdexT { get; set; }
