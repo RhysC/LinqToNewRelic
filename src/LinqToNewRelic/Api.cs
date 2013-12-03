@@ -15,9 +15,15 @@ namespace LinqToNewRelic
             _apiKey = apiKey;
         }
 
-        public Application[] GetApplication(string accountId)
+        public Application[] GetApplications(string accountId)
         {
             return GetDeserializedResult<Application[]>(GetNewRelicUrl(accountId, "/applications.json"));
+        }
+
+        public Server[] GetApplicationServers(string accountId, int applicationId)
+        {
+            var serverPath = string.Format("/applications/{0}/servers.json", applicationId);
+            return GetDeserializedResult<Server[]>(GetNewRelicUrl(accountId, serverPath));
         }
 
         public ApplicationMetricsDefinition[] ApplicationMetricDefinitions(string accountId, int applicationId)

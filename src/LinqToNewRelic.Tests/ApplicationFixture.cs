@@ -30,7 +30,7 @@ namespace LinqToNewRelic.Tests
         public void CanGetApplication()
         {
             var api = new Api(_apiKey);
-            var applications = api.GetApplication(_accountId).ToList();
+            var applications = api.GetApplications(_accountId).ToList();
             Assert.NotEmpty(applications);
             foreach (var application in applications)
             {
@@ -42,6 +42,21 @@ namespace LinqToNewRelic.Tests
                 Assert.NotEqual(0, application.HealthStatus);
             }
         }
+
+        [Fact]
+        public void CanGetApplicationServers()
+        {
+            var api = new Api(_apiKey);
+            var servers = api.GetApplicationServers(_accountId, _applicationId).ToList();
+            Assert.NotEmpty(servers);
+            foreach (var server in servers)
+            {
+                Assert.NotEqual(0, server.Id);
+                Assert.NotNull(server.HostName);
+                Assert.NotNull(server.OverviewUrl);
+            }
+        }
+
         [Fact]
         public void CanGetApplicationMetricDefinitions()
         {
@@ -79,7 +94,7 @@ namespace LinqToNewRelic.Tests
         {
             var api = new Api(_apiKey);
             var query =
-                from application in api.GetApplication(_accountId)
+                from application in api.GetApplications(_accountId)
                 where application.Hidden
                 where application.Name.ToLower().Contains("command") &&
                       application.Name.ToLower().Contains("mediator")
