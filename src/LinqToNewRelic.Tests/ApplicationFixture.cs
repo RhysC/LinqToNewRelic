@@ -47,13 +47,27 @@ namespace LinqToNewRelic.Tests
         public void CanGetApplicationServers()
         {
             var api = new Api(_apiKey);
-            var servers = api.GetApplicationServers(_accountId, _applicationId).ToList();
+            var servers = api.GetApplicationServers(_accountId, _applicationId);
             Assert.NotEmpty(servers);
             foreach (var server in servers)
             {
                 Assert.NotEqual(0, server.Id);
                 Assert.NotNull(server.HostName);
                 Assert.NotNull(server.OverviewUrl);
+            }
+        }
+        [Fact]
+        public void CanGetApplicationSettings()
+        {
+            var api = new Api(_apiKey);
+            var settings = api.GetApplicationSettings(_accountId);
+            Assert.NotEmpty(settings);
+            foreach (var setting in settings)
+            {
+                Assert.NotEqual(0, setting.ApplicationId);
+                Assert.NotNull(setting.Name);
+                Assert.NotNull(setting.Url);
+                Assert.NotEqual(0,setting.RumApdexT);
             }
         }
 

@@ -49,6 +49,7 @@
     <Compile Include="MetricDataSearchParams.cs" />
     <Compile Include="Models\AgentSummary.cs" />
     <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\ApplicationSetting.cs" />
     <Compile Include="Models\MetricNames.cs" />
     <Compile Include="Models\ApplicationMetricsDefinition.cs" />
     <Compile Include="Models\MetricData.cs" />
