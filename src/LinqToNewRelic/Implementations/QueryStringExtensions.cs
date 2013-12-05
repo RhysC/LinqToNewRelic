@@ -3,9 +3,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 
-namespace LinqToNewRelic
+namespace LinqToNewRelic.Implementations
 {
-    public static class QueryStringExtensions
+    static class QueryStringExtensions
     {
         public static string ToQueryString(this NameValueCollection source, bool removeEmptyEntries)
         {

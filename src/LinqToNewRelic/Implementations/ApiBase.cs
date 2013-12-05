@@ -6,9 +6,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 
-namespace LinqToNewRelic
+namespace LinqToNewRelic.Implementations
 {
-    public abstract class ApiBase
+    abstract class ApiBase
     {
         private readonly string _apiKey;
 

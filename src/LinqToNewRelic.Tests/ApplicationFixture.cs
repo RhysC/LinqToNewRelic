@@ -7,13 +7,13 @@ namespace LinqToNewRelic.Tests
 {
     public class ApplicationFixture : IUseFixture<ConfigSetUp>
     {
-        private ApplicationApi _api;
+        private IApplicationQueries _api;
         private string _accountId;
         private int _applicationId;
 
         public void SetFixture(ConfigSetUp data)
         {
-            _api = new ApplicationApi(data.ApiKey);
+            _api = new Api(data.ApiKey).Applications;
             _accountId = data.AccountId;
             _applicationId = data.ApplicationId;
         }

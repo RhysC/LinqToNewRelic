@@ -1,8 +1,8 @@
 ﻿using LinqToNewRelic.Models;
 
-namespace LinqToNewRelic
+namespace LinqToNewRelic.Implementations
 {
-    public class UserApi : ApiBase
+    class UserApi : ApiBase, IUserQueries
     {
         public UserApi(string apiKey)
             : base(apiKey) { }

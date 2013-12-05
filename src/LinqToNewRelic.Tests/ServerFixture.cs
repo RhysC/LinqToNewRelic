@@ -5,12 +5,12 @@ namespace LinqToNewRelic.Tests
 {
     public class ServerFixture : IUseFixture<ConfigSetUp>
     {
-        private ServerApi _api;
+        private IServerQueries _api;
         private string _accountId;
 
         public void SetFixture(ConfigSetUp data)
         {
-            _api = new ServerApi(data.ApiKey);
+            _api = new Api(data.ApiKey).Servers;
             _accountId = data.AccountId;
         }
         [Fact]
